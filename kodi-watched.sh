@@ -21,13 +21,19 @@ paramCheck() {
 }
 
 OPTIND=$((OPTIND+1))
-while getopts "d:r:" o; do
+while getopts "d:r:x:X:" o; do
     case "${o}" in
         d)
             dbVersion=${OPTARG}
             ;;
         r)
             remote=${OPTARG}
+            ;;
+        x)
+            xargCommand=${OPTARG}
+            ;;
+        X)
+            xargArgs=${OPTARG}
             ;;
         *)
             usage "invalid param"
@@ -42,6 +48,10 @@ if [ $cmd == "install" ] ; then
     $d/install-client-ssh.sh $remote
 elif [ $cmd == "list" ] ; then
     ssh $remote /opt/kwpc/client.sh $cmd $dbVersion
+elif [ $cmd == "xargs" ] ; then
+    paramCheck "$xargCommand" "-x xargCommand"
+    paramCheck "$xargArgs" "-X xargArgs"
+    ssh $remote /opt/kwpc/client.sh $cmd $dbVersion $xargCommand $xargArgs
 else
     echo "unknown command $cmd" 1>&2
     exit 1
