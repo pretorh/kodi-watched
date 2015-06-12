@@ -14,6 +14,11 @@ usage() {
         1>&2
     exit 1;
 }
+paramCheck() {
+    if [ -z $1 ] ; then
+        usage "missing: $2"
+    fi
+}
 
 OPTIND=$((OPTIND+1))
 while getopts "d:r:" o; do
@@ -30,7 +35,7 @@ while getopts "d:r:" o; do
     esac
 done
 
-[ -z $remote ] && usage "missing: -r user@remote"
+paramCheck "$remote" "-r user@remote";
 
 if [ $cmd == "list" ] ; then
     ssh $remote /opt/kwpc/client.sh $cmd $dbVersion
