@@ -50,7 +50,6 @@ elif [ $cmd == "list" ] ; then
     ssh $remote /opt/kwpc/client.sh $cmd $dbVersion
 elif [ $cmd == "xargs" ] ; then
     paramCheck "$xargCommand" "-x xargCommand"
-    paramCheck "$xargArgs" "-X xargArgs"
     ssh $remote /opt/kwpc/client.sh $cmd $dbVersion $xargCommand $xargArgs
 else
     echo "unknown command $cmd" 1>&2
