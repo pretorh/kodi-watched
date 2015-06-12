@@ -11,6 +11,8 @@ usage() {
         1>&2
     echo -e "Optional params [default value]\n" \
         "\t-d dbVersion [90]" \
+        "\t-x xarg command" \
+        "\t-X xarg arguments" \
         1>&2
     exit 1;
 }
