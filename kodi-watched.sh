@@ -5,7 +5,13 @@ cmd=${1?"Need command as first argument"}
 dbVersion=90
 
 usage() {
-    echo "need $1" 1>&2
+    echo "$1" 1>&2
+    echo -e "Required params\n" \
+        "\t-r user@server" \
+        1>&2
+    echo -e "Optional params [default value]\n" \
+        "\t-d dbVersion [90]" \
+        1>&2
     exit 1;
 }
 
@@ -19,13 +25,12 @@ while getopts "d:r:" o; do
             remote=${OPTARG}
             ;;
         *)
-            echo "unknown parameter" 2>&1
-            exit 1
+            usage "invalid param"
             ;;
     esac
 done
 
-[ -z $remote ] && usage "-r user@remote"
+[ -z $remote ] && usage "missing: -r user@remote"
 
 if [ $cmd == "list" ] ; then
     ssh $remote /opt/kwpc/client.sh $cmd $dbVersion
