@@ -37,7 +37,10 @@ done
 
 paramCheck "$remote" "-r user@remote";
 
-if [ $cmd == "list" ] ; then
+if [ $cmd == "install" ] ; then
+    d=`dirname $0`
+    $d/install-client-ssh.sh $remote
+elif [ $cmd == "list" ] ; then
     ssh $remote /opt/kwpc/client.sh $cmd $dbVersion
 else
     echo "unknown command $cmd" 1>&2
